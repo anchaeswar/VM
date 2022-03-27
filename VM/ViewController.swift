@@ -14,14 +14,16 @@ class ViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        EmployeeDetailsButton.layer.borderWidth = 1
-        EmployeeDetailsButton.layer.cornerRadius = 5
+        EmployeeDetailsButton.layer.borderWidth = 2
+        EmployeeDetailsButton.layer.cornerRadius = 10
         EmployeeDetailsButton.layer.borderColor = UIColor.white.cgColor
         
-        RoomsListButton.layer.borderWidth = 1
-        RoomsListButton.layer.cornerRadius = 5
+        RoomsListButton.layer.borderWidth = 2
+        RoomsListButton.layer.cornerRadius = 10
         RoomsListButton.layer.borderColor = UIColor.white.cgColor
 
+        
+        
     }
     
     

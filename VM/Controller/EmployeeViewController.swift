@@ -5,17 +5,8 @@
 
 import UIKit
 import Kingfisher
+import MBProgressHUD
 
-struct People : Decodable {
-    let createdAt : String
-    let firstName : String
-    let avatar : String
-    let lastName : String
-    let email : String
-    let jobtitle : String
-    let favouriteColor : String
-    let id : String
-}
 
 class EmployeeViewController: UIViewController {
     
@@ -24,10 +15,8 @@ class EmployeeViewController: UIViewController {
     
     @IBOutlet var detailsView: UIView!
     @IBOutlet var detailsScroll: UIScrollView!
-
     @IBOutlet var avtarImageView: UIImageView!
     @IBOutlet var tableView: UITableView!
-
     @IBOutlet var idLabel: UILabel!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var jobtitleLabel: UILabel!
@@ -39,24 +28,29 @@ class EmployeeViewController: UIViewController {
         
         getPeopleData()
             
-        detailsView.frame=CGRect(x: 20, y: (view.frame.size.height-380)/2, width: (view.frame.size.width-40), height: 370)
+        detailsView.frame=CGRect(x: 20, y: (view.frame.size.height-380)/2, width: (view.frame.size.width-40), height: 400)
         
         detailsScroll.frame=CGRect(x: 0, y: 44, width: detailsView.frame.size.width, height: 320)
 
         view.addSubview(tableView)
-    }
 
+    }
     
     func getPeopleData () {
+        MBProgressHUD.showAdded(to: self.view, animated: true)
         
-        guard let url = URL(string: "https://61e947967bc0550017bc61bf.mockapi.io/api/v1/people") else { return }
         
+        guard let url = URL(string: API_S.BaseURL + "people") else { return }
+
         URLSession.shared.dataTask(with: url) { (data, response, error) in
+            
             guard let data = data else { return }
             
             do {
                 self.peps = try JSONDecoder().decode([People].self, from: data)
-                DispatchQueue.main.async {                    self.tableView.reloadData()
+                DispatchQueue.main.async {
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                    self.tableView.reloadData()
                 }
             }
             catch{
@@ -91,6 +85,7 @@ class EmployeeViewController: UIViewController {
         return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
     }
 }
+
 extension EmployeeViewController : UITableViewDelegate,UITableViewDataSource  {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
