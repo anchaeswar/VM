@@ -54,7 +54,8 @@ class EmployeeViewController: UIViewController {
                 }
             }
             catch{
-                print("Error")
+                MBProgressHUD.hide(for: self.view, animated: true)
+                print("Unexpected error: \(error).")
             }
         }.resume()
     }
